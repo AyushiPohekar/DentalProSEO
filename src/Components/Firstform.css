@@ -1,0 +1,131 @@
+.FirstFormDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.FieldDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.clrinput {
+  padding: 1rem;
+  border-radius: 50px;
+  border: none;
+  outline: 1px solid transparent;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+.btns {
+  display: flex;
+  gap: 2rem;
+  width: max-content;
+  margin: auto;
+}
+.prev {
+  color: #fff;
+  border: 0;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 8px 30px;
+  margin: 5px;
+  font-size: 18px;
+  background: #0fae76;
+}
+.next {
+  color: #fff;
+  border: 0;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 8px 30px;
+  margin: 5px;
+  font-size: 18px;
+  background: #0fae76;
+}
+.error {
+  outline: 1px solid red;
+  padding: 1rem;
+  border-radius: 50px;
+  border: none;
+
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+.AddLocation{
+    background-color: #3B82F6;
+    width: 180px;
+    padding:10px 12px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.checkboxdiv{
+  display: flex;
+  gap: 2px;
+}
+.para{
+  text-align: center;
+  font-size: larger;
+}
+.quizdiv{
+  display: flex;
+  flex-direction: row;
+  background-color: #e5e7eb;
+  padding: 1rem 2rem;
+  border: 25px;
+}
+.verifydiv{
+  width: 100px;
+  height: 100px;
+}
+.Submitbtn{
+  color: #fff;
+  border: 0;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 8px 30px;
+  margin: 5px;
+  font-size: 18px;
+  background: #0fae76;
+
+}
+.termslink a{
+  color: red;
+
+}
+.termslink{
+  padding: 0 5px;
+}
+.randomdiv{
+gap: 1rem;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding-top: 2rem;
+}
+.randomnumspan{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btndiv{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2rem;
+}
+.disbledbtn{
+  background-color: rgba(128, 128, 128, 0.429);
+  color: #fff;
+  border: 0;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 8px 30px;
+  margin: 5px;
+  font-size: 18px;
+}

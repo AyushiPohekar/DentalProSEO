@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import MultiStepForm from "./Components/MultiStepForm";
+import Rankover from "./Components/Rankroverdiv/Rankover";
+import FormSubmiitted from "./Components/formsubmitted/FormSubmiitted";
+import Form from "./Components/Form";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="Rankroverdiv">
+        <Rankover />
+      </div>
+   
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Form/>} />
+          <Route path="/success" element={<FormSubmiitted/>} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
