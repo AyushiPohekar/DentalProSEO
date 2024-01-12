@@ -93,8 +93,10 @@
   background: #0fae76;
 
 }
-.termslink a{
+.termslink {
   color: red;
+  text-decoration: underline;
+  cursor: pointer;
 
 }
 .termslink{

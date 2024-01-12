@@ -1,8 +1,9 @@
 .submittedDiv {
   background-color: white;
   width: 900px;
-  height: 500px;
+  height: max-content;
   text-align: center;
+  border-radius: 15px;
 }
 .thankyouimg {
   width: 50%;

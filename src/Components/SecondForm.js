@@ -8,44 +8,60 @@ const SecondForm = ({onChange}) => {
   const [nextClicked, setNextClicked] = useState(false);
   const { currentStep, setCurrentStep } = useContext(MultiStepFormContext);
  
+  const isEmailValid = (email) => {
+   
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const isPhoneNumberValid = (phoneNumber) => {
+
+    const phoneRegex = /^\d{3}-?\d{3}-?\d{4}$/;
+    return phoneRegex.test(phoneNumber);
+  };
+
   const handleNext = () => {
     const formInputs = document.querySelectorAll(".FieldDiv input");
     let isValid = true;
-
-    const isEmailValid = (email) => {
-   
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailRegex.test(email);
-    };
-  
-    const isPhoneNumberValid = (phoneNumber) => {
-  
-      const phoneRegex = /^\d{3}-?\d{3}-?\d{4}$/;
-      return phoneRegex.test(phoneNumber);
-    };
+    let errorFields = [];
 
     formInputs.forEach((input) => {
-      if (input.hasAttribute("required") && !input.validity.valid) {
+      const { name, validity, value } = input;
+
+      if (input.hasAttribute("required") && !validity.valid) {
         isValid = false;
+        errorFields.push(name);
+      }
+
+      if (name === "leadEmail" && !isEmailValid(value)) {
+        isValid = false;
+        errorFields.push(name);
+      }
+
+      if (name === "leadmobilenumber" && !isPhoneNumberValid(value)) {
+        isValid = false;
+        errorFields.push(name);
       }
     });
-    if (!isEmailValid(formData.ContactEmail)) {
-      isValid = false;
-    }
-  
-    if (!isPhoneNumberValid(formData.ContactNumber)) {
-      isValid = false;
-    }
 
     if (!isValid) {
       setNextClicked(true);
       updateErrorMessage("Please Enter required fields data");
+
+      formInputs.forEach((input) => {
+        const { name } = input;
+        input.classList.toggle("error", errorFields.includes(name));
+        input.classList.toggle("clrinput", !errorFields.includes(name));
+      });
     } else {
       setCurrentStep(currentStep + 1);
-      setNextClicked(true);
+      setNextClicked(false);
       updateErrorMessage("");
     }
   };
+
+
+
   const handlePrev = () => {
     setCurrentStep(currentStep - 1);
   };
@@ -73,8 +89,8 @@ const SecondForm = ({onChange}) => {
           placeholder="name"
           required
           className={nextClicked ? "error" : "clrinput"}
-          value={formData?.leadName}
-          name="leadName"
+          value={formData?.leadname}
+          name="leadname"
           onChange={handleInputChange}
         />
         <input
@@ -91,8 +107,8 @@ const SecondForm = ({onChange}) => {
           placeholder="(201) 555-0123"
           required
           className={nextClicked ? "error" : "clrinput"}
-          value={formData?.leadContact}
-          name="leadContact"
+          value={formData?.leadmobilenumber}
+          name="leadmobilenumber"
           onChange={handleInputChange}
         />
       </div>

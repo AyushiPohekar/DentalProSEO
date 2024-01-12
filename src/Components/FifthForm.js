@@ -10,6 +10,7 @@ const FifthForm = ({onChange}) => {
   const [nextClicked, setNextClicked] = useState(false);
   const [openmodal, setOpenModal] = useState(false);
   const { currentStep, setCurrentStep } = useContext(MultiStepFormContext);
+  
 
   const handleNext = () => {
     const formInputs = document.querySelectorAll(".FieldDiv input");
@@ -61,9 +62,9 @@ const FifthForm = ({onChange}) => {
         <input
           type="file"
           className="fileinput"
-          value={formData?.file}
+          value={formData?.uploadimage}
           onChange={handleInputChange}
-          name="file"
+          name="uploadimage"
         />
       </div>
 

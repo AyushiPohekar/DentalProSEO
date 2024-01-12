@@ -2,10 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import MultiStepFormContext from "./MultiStepFormContext";
 import { useNavigate } from "react-router-dom";
 import { FiRefreshCw } from "react-icons/fi";
+import * as html2pdf from "html2pdf.js";
+
 const SixthForm = () => {
+
   const navigate = useNavigate();
   const [checkboxclicked, setCheckBoxClicked] = useState(false);
-  const { currentStep, setCurrentStep } = useContext(MultiStepFormContext);
+  const { formData, currentStep, setCurrentStep } =
+    useContext(MultiStepFormContext);
   const handlePrev = () => {
     setCurrentStep(currentStep - 1);
   };
@@ -15,6 +19,7 @@ const SixthForm = () => {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false);
   useEffect(() => {
     generateRandomNumbers();
+  
   }, []);
 
   const generateRandomNumbers = () => {
@@ -27,19 +32,59 @@ const SixthForm = () => {
     generateRandomNumbers();
   };
 
-  const handleSubmit = () => {
+  const convertToPDF = async (htmlContent) => {
+    const pdfOptions = {
+      margin: 10,
+      filename: 'document.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    };
+  
+    const pdf = await html2pdf().from(htmlContent, pdfOptions).outputPdf();
+  return pdf;
+  };
+  
+
+  const handleSubmit = async () => {
+
+    
+   
     const expectedAnswer = randomNumbers.num1 + randomNumbers.num2;
 
     if (parseInt(userAnswer) === expectedAnswer) {
-    
       setIsAnswerCorrect(true);
-      
+      const updatedFormData = { ...formData };
 
-      // Move to the next route
-      navigate("/success");
+      updatedFormData.masterId = "123";
+      updatedFormData.childMasterId = "123";
+      updatedFormData.pdf = "https://onboarding.rankroverpro.com/terms-and-conditions-onboarding";
+
+      const formDataObject = new FormData();
+      Object.keys(updatedFormData).forEach((key) => {
+        formDataObject.append(key, updatedFormData[key]);
+      });
+
+      try {
+        const response = await fetch(
+          "http://192.168.1.5:3001/rmployee/create",
+          {
+            method: "POST",
+            body: formDataObject,
+          }
+        );
+
+        if (response.ok) {
+          navigate("/success");
+        } else {
+          console.error("Failed to submit the form");
+        }
+      } catch (error) {
+        console.error("Error occurred while submitting the form", error);
+      }
     } else {
-      // User's answer is incorrect, handle accordingly (e.g., show an error message)
       setIsAnswerCorrect(false);
+      alert("Incorrect captcha")
     }
   };
 
@@ -58,13 +103,14 @@ const SixthForm = () => {
         <p>
           By electronically executing this agreement, you agree to all of the
           above
-          <span className="termslink">
-            <a
+          <span className="termslink" onClick={()=>navigate("/terms")}>
+            terms and conditions
+            {/* <a
               href="https://onboarding.rankroverpro.com/terms-and-conditions-onboarding"
               target="_blank"
             >
               terms and conditions
-            </a>
+            </a> */}
           </span>
         </p>
       </div>
@@ -90,7 +136,7 @@ const SixthForm = () => {
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
             />
-            <FiRefreshCw onClick={handleRefresh} className="refreshicon"/>
+            <FiRefreshCw onClick={handleRefresh} className="refreshicon" />
           </div>
           <div className="btndiv">
             <button className="Submitbtn" onClick={handleSubmit}>

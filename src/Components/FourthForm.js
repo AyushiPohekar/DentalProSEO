@@ -3,39 +3,49 @@ import "./Firstform.css";
 
 import MultiStepFormContext from "./MultiStepFormContext";
 
-const FourthForm = ({onChange}) => {
-  const{formData, setFormData,errorMessage, updateErrorMessage}=useContext(MultiStepFormContext)
+const FourthForm = ({ onChange }) => {
+  const { formData, setFormData, errorMessage, updateErrorMessage } =
+    useContext(MultiStepFormContext);
   const [nextClicked, setNextClicked] = useState(false);
 
   const { currentStep, setCurrentStep } = useContext(MultiStepFormContext);
+  const [fieldValidations, setFieldValidations] = useState({
+    domain: true,
+    googleaccount: true,
+  });
 
   const handleNext = () => {
-    const formInputs = document.querySelectorAll(".FieldDiv input");
     let isValid = true;
+    const updatedValidations = { ...fieldValidations };
 
-    formInputs.forEach((input) => {
-      if (input.hasAttribute("required") && !input.validity.valid) {
+    Object.keys(updatedValidations).forEach((fieldName) => {
+      const fieldValue = formData[fieldName];
+
+      if (!fieldValue) {
         isValid = false;
+        updatedValidations[fieldName] = false;
+      } else {
+        updatedValidations[fieldName] = true;
       }
     });
+
+    setFieldValidations(updatedValidations);
 
     if (!isValid) {
       setNextClicked(true);
       updateErrorMessage("Please Enter required fields data");
     } else {
-
       setCurrentStep(currentStep + 1);
       setNextClicked(false);
       updateErrorMessage("");
     }
   };
+
   const handlePrev = () => {
-    
     setCurrentStep(currentStep - 1);
   };
 
   const handleInputChange = (e) => {
-    console.log(e)
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
     onChange({ [name]: value });
@@ -53,10 +63,10 @@ const FourthForm = ({onChange}) => {
           type="text"
           placeholder="Domain"
           required
-          className={nextClicked ? "error" : "clrinput"}
-          value={formData?.Domain}
+          className={fieldValidations.domain ? "clrinput" : "error"}
+          value={formData?.domain}
           onChange={handleInputChange}
-          name="Domain"
+          name="domain"
         />
         <div>
           What is the email that is associated with your Google Account? Our
@@ -67,10 +77,10 @@ const FourthForm = ({onChange}) => {
           type="text"
           placeholder="Google Account"
           required
-          className={nextClicked ? "error" : "clrinput"}
-          value={formData?.googleAccount}
+          className={fieldValidations.googleaccount ? "clrinput" : "error"}
+          value={formData?.googleaccount}
           onChange={handleInputChange}
-          name="googleAccount"
+          name="googleaccount"
         />
       </div>
 

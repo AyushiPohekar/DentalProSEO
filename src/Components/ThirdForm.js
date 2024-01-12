@@ -3,29 +3,55 @@ import MultiStepFormContext from "./MultiStepFormContext";
 import AddressLocation from "./AddressLocation/AddressLocation";
 
 const ThirdForm = ({ onChange }) => {
-  const { formData, setFormData,errorMessage, updateErrorMessage} = useContext(MultiStepFormContext);
+  const { formData, setFormData, errorMessage, updateErrorMessage } =
+    useContext(MultiStepFormContext);
   const [tooglelocation, setToggleLocation] = useState(false);
   const [nextClicked, setNextClicked] = useState(false);
+  const [fieldValidations, setFieldValidations] = useState({
+    businessname: true,
+    streetaddress1: true,
+    city1: true,
+    state1: true,
+    pincode1: true,
+    thirdphoneNo: true,
+    businessWebsite: true,
+  });
 
   const { currentStep, setCurrentStep } = useContext(MultiStepFormContext);
 
-  const handleNext = () => {
-    const formInputs = document.querySelectorAll(".FieldDiv input");
-    let isValid = true;
+  const isPhoneNumberValid = (phoneNumber) => {
+    const phoneRegex = /^\d{3}-?\d{3}-?\d{4}$/;
+    return phoneRegex.test(phoneNumber);
+  };
 
-    formInputs.forEach((input) => {
-      if (input.hasAttribute("required") && !input.validity.valid) {
-        isValid = false;
+  const handleNext = () => {
+    let isValid = true;
+    const updatedValidations = { ...fieldValidations };
+
+    Object.keys(updatedValidations).forEach((fieldName) => {
+      const fieldValue = formData[fieldName];
+
+      if (fieldName !== "streetaddress2") {
+     
+        if (
+          !fieldValue ||
+          (fieldName === "thirdphoneNo" && !isPhoneNumberValid(fieldValue))
+        ) {
+          isValid = false;
+          updatedValidations[fieldName] = false;
+        } else {
+          updatedValidations[fieldName] = true;
+        }
       }
     });
 
+    setFieldValidations(updatedValidations);
+
     if (!isValid) {
-      setNextClicked(true);
       updateErrorMessage("Please Enter required fields data");
     } else {
       setCurrentStep(currentStep + 1);
-      setNextClicked(false);
-      updateErrorMessage("Please Enter required fields data");
+      updateErrorMessage("");
     }
   };
 
@@ -52,7 +78,7 @@ const ThirdForm = ({ onChange }) => {
           type="text"
           placeholder="Business name"
           required
-          className={nextClicked ? "error" : "clrinput"}
+          className={fieldValidations.businessname ? "clrinput" : "error"}
           value={formData?.businessname}
           onChange={handleInputChange}
           name="businessname"
@@ -61,43 +87,46 @@ const ThirdForm = ({ onChange }) => {
           type="text"
           placeholder="Street Address"
           required
-          className={nextClicked ? "error" : "clrinput"}
-          value={formData?.streetadd}
+          className={fieldValidations.streetaddress1 ? "clrinput" : "error"}
+          value={formData?.streetaddress1}
           onChange={handleInputChange}
-          name="streetadd"
+          name="streetaddress1"
         />
         <input
           type="text"
           placeholder="Street Address 2 (optional)"
-          className={nextClicked ? "error" : "clrinput"}
-          value={formData?.streetadd2}
+          className={"clrinput"}
+          value={formData?.streetaddress2}
           onChange={handleInputChange}
-          name="streetadd2"
+          name="streetaddress2"
         />
         <div>
           <input
             type="text"
             placeholder="city"
-            className={nextClicked ? "error" : "clrinput"}
-            value={formData?.city}
+            className={fieldValidations.city1 ? "clrinput" : "error"}
+            value={formData?.city1}
             onChange={handleInputChange}
-            name="city"
+            name="city1"
+            required
           />
           <input
             type="text"
             placeholder="State"
-            className={nextClicked ? "error" : "clrinput"}
-            value={formData?.State}
+            className={fieldValidations.state1 ? "clrinput" : "error"}
+            value={formData?.state1}
             onChange={handleInputChange}
-            name="State"
+            name="state1"
+            required
           />
           <input
             type="text"
             placeholder="Zip"
-            className={nextClicked ? "error" : "clrinput"}
-            value={formData?.primaryzip}
+            className={fieldValidations.pincode1 ? "clrinput" : "error"}
+            value={formData?.pincode1}
             onChange={handleInputChange}
-            name="primaryzip"
+            name="pincode1"
+            required
           />
         </div>
       </div>
@@ -105,19 +134,21 @@ const ThirdForm = ({ onChange }) => {
       <input
         type="text"
         placeholder="(201) 555-0123"
-        className={nextClicked ? "error" : "clrinput"}
-        value={formData?.primarycontact}
+        className={fieldValidations.thirdphoneNo ? "clrinput" : "error"}
+        value={formData?.thirdphoneNo}
         onChange={handleInputChange}
-        name="primarycontact"
+        name="thirdphoneNo"
+        required
       />
 
       <input
         type="text"
         placeholder="Business Website"
-        className={nextClicked ? "error" : "clrinput"}
+        className={fieldValidations.businessWebsite ? "clrinput" : "error"}
         value={formData?.businessWebsite}
         onChange={handleInputChange}
         name="businessWebsite"
+        required
       />
 
       <button
@@ -129,9 +160,9 @@ const ThirdForm = ({ onChange }) => {
 
       {tooglelocation && (
         <>
-          <AddressLocation number={1}/>
-          <AddressLocation number={2}/>
-          <AddressLocation number={3}/>
+          <AddressLocation number={1} />
+          <AddressLocation number={2} />
+          <AddressLocation number={3} />
         </>
       )}
 
