@@ -17,7 +17,7 @@ const MultiStepForm = () => {
   };
   
   const [formData, setFormData] = useState();
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(4);
   console.log(formData);
   const next = () => {
     if (currentStep === stepComponents.length - 1) {
