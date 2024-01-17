@@ -15,6 +15,7 @@ const MultiStepForm = () => {
   const updateErrorMessage = (message) => {
     setErrorMessage(message);
   };
+  
   const [formData, setFormData] = useState();
   const [currentStep, setCurrentStep] = useState(0);
   console.log(formData);

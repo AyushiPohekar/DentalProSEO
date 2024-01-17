@@ -160,9 +160,9 @@ const ThirdForm = ({ onChange }) => {
 
       {tooglelocation && (
         <>
-          <AddressLocation number={1} onChange={onChange}/>
-          <AddressLocation number={2} onChange={onChange}/>
-          <AddressLocation number={3} onChange={onChange}/>
+          <AddressLocation number={"one"} onChange={onChange}/>
+          <AddressLocation number={"two"} onChange={onChange}/>
+          <AddressLocation number={"three"} onChange={onChange}/>
         </>
       )}
 
