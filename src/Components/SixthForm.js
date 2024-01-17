@@ -5,7 +5,6 @@ import { FiRefreshCw } from "react-icons/fi";
 import * as html2pdf from "html2pdf.js";
 
 const SixthForm = () => {
-
   const navigate = useNavigate();
   const [checkboxclicked, setCheckBoxClicked] = useState(false);
   const { formData, currentStep, setCurrentStep } =
@@ -19,7 +18,6 @@ const SixthForm = () => {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false);
   useEffect(() => {
     generateRandomNumbers();
-  
   }, []);
 
   const generateRandomNumbers = () => {
@@ -35,21 +33,17 @@ const SixthForm = () => {
   const convertToPDF = async (htmlContent) => {
     const pdfOptions = {
       margin: 10,
-      filename: 'document.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
+      filename: "document.pdf",
+      image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
     };
-  
+
     const pdf = await html2pdf().from(htmlContent, pdfOptions).outputPdf();
-  return pdf;
+    return pdf;
   };
-  
 
   const handleSubmit = async () => {
-
-    
-   
     const expectedAnswer = randomNumbers.num1 + randomNumbers.num2;
 
     if (parseInt(userAnswer) === expectedAnswer) {
@@ -58,7 +52,8 @@ const SixthForm = () => {
 
       updatedFormData.masterId = "123";
       updatedFormData.childMasterId = "123";
-      updatedFormData.pdf = "https://onboarding.rankroverpro.com/terms-and-conditions-onboarding";
+      updatedFormData.pdf =
+        "https://onboarding.rankroverpro.com/terms-and-conditions-onboarding";
 
       const formDataObject = new FormData();
       Object.keys(updatedFormData).forEach((key) => {
@@ -75,6 +70,8 @@ const SixthForm = () => {
         );
 
         if (response.ok) {
+          alert("Form submitted successfully!");
+
           navigate("/success");
         } else {
           console.error("Failed to submit the form");
@@ -84,7 +81,7 @@ const SixthForm = () => {
       }
     } else {
       setIsAnswerCorrect(false);
-      alert("Incorrect captcha")
+      alert("Incorrect captcha");
     }
   };
 
@@ -103,7 +100,7 @@ const SixthForm = () => {
         <p>
           By electronically executing this agreement, you agree to all of the
           above
-          <span className="termslink" onClick={()=>navigate("/terms")}>
+          <span className="termslink" onClick={() => navigate("/terms")}>
             terms and conditions
             {/* <a
               href="https://onboarding.rankroverpro.com/terms-and-conditions-onboarding"
