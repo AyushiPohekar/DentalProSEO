@@ -1,21 +1,20 @@
 import React, { useContext, useState } from "react";
 import MultiStepFormContext from "./MultiStepFormContext";
 
+const SecondForm = ({ onChange }) => {
+  const { formData, setFormData, errorMessage, updateErrorMessage } =
+    useContext(MultiStepFormContext);
 
-
-const SecondForm = ({onChange}) => {
-  const{formData, setFormData,errorMessage, updateErrorMessage}=useContext(MultiStepFormContext)
   const [nextClicked, setNextClicked] = useState(false);
+  const [invalidFields, setInvalidFields] = useState([]);
   const { currentStep, setCurrentStep } = useContext(MultiStepFormContext);
- 
+
   const isEmailValid = (email) => {
-   
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
   const isPhoneNumberValid = (phoneNumber) => {
-
     const phoneRegex = /^\d{3}-?\d{3}-?\d{4}$/;
     return phoneRegex.test(phoneNumber);
   };
@@ -23,55 +22,54 @@ const SecondForm = ({onChange}) => {
   const handleNext = () => {
     const formInputs = document.querySelectorAll(".FieldDiv input");
     let isValid = true;
-    let errorFields = [];
+    let invalidFieldsArray = [];
 
     formInputs.forEach((input) => {
       const { name, validity, value } = input;
 
       if (input.hasAttribute("required") && !validity.valid) {
         isValid = false;
-        errorFields.push(name);
+        invalidFieldsArray.push(name);
       }
 
       if (name === "leadEmail" && !isEmailValid(value)) {
         isValid = false;
-        errorFields.push(name);
+        invalidFieldsArray.push(name);
       }
 
       if (name === "leadmobilenumber" && !isPhoneNumberValid(value)) {
         isValid = false;
-        errorFields.push(name);
+        invalidFieldsArray.push(name);
       }
     });
 
     if (!isValid) {
       setNextClicked(true);
+      setInvalidFields(invalidFieldsArray);
       updateErrorMessage("Please Enter required fields data");
 
       formInputs.forEach((input) => {
         const { name } = input;
-        input.classList.toggle("error", errorFields.includes(name));
-        input.classList.toggle("clrinput", !errorFields.includes(name));
+        input.classList.toggle("error", invalidFieldsArray.includes(name));
+        input.classList.toggle("clrinput", !invalidFieldsArray.includes(name));
       });
     } else {
       setCurrentStep(currentStep + 1);
       setNextClicked(false);
+      setInvalidFields([]);
       updateErrorMessage("");
     }
   };
 
-
-
   const handlePrev = () => {
     setCurrentStep(currentStep - 1);
   };
+
   const handleInputChange = (e) => {
-    console.log(e)
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
     onChange({ [name]: value });
   };
-
 
   return (
     <>
@@ -88,7 +86,9 @@ const SecondForm = ({onChange}) => {
           type="text"
           placeholder="name"
           required
-          className={nextClicked ? "error" : "clrinput"}
+          className={`${
+            nextClicked && invalidFields.includes("leadname") ? "error" : "clrinput"
+          }`}
           value={formData?.leadname}
           name="leadname"
           onChange={handleInputChange}
@@ -97,7 +97,9 @@ const SecondForm = ({onChange}) => {
           type="text"
           placeholder="email"
           required
-          className={nextClicked ? "error" : "clrinput"}
+          className={`${
+            nextClicked && invalidFields.includes("leadEmail") ? "error" : "clrinput"
+          }`}
           value={formData?.leadEmail}
           name="leadEmail"
           onChange={handleInputChange}
@@ -106,7 +108,9 @@ const SecondForm = ({onChange}) => {
           type="text"
           placeholder="(201) 555-0123"
           required
-          className={nextClicked ? "error" : "clrinput"}
+          className={`${
+            nextClicked && invalidFields.includes("leadmobilenumber") ? "error" : "clrinput"
+          }`}
           value={formData?.leadmobilenumber}
           name="leadmobilenumber"
           onChange={handleInputChange}
@@ -114,7 +118,9 @@ const SecondForm = ({onChange}) => {
       </div>
 
       <div className="btns">
-        <button className="prev" onClick={handlePrev}>prev</button>
+        <button className="prev" onClick={handlePrev}>
+          prev
+        </button>
         <button className="next" onClick={handleNext}>
           next
         </button>

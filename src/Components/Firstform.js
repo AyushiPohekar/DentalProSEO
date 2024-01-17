@@ -14,14 +14,8 @@ const Firstform = ({ onChange }) => {
   };
 
   const [nextClicked, setNextClicked] = useState(false);
-
   const { currentStep, setCurrentStep } = useContext(MultiStepFormContext);
-  const [fieldValidations, setFieldValidations] = useState({
-    primary_contactname: true,
-    primary_mobilenumber: true,
-    primary_useremail: true,
-    primary_position: true,
-  });
+  const [invalidFields, setInvalidFields] = useState([]);
 
   const isEmailValid = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,162 +27,37 @@ const Firstform = ({ onChange }) => {
     return phoneRegex.test(phoneNumber);
   };
 
-  // const handleNext = () => {
-  //   const formInputs = document.querySelectorAll(".FieldDiv input");
-  //   let isValid = true;
-
-  //   formInputs.forEach((input) => {
-  //     if (input.hasAttribute("required") && !input.validity.valid) {
-  //       isValid = false;
-  //     }
-
-  //   });
-  //   // if (!isEmailValid(formData.primary_useremail)) {
-  //   //   isValid = false;
-  //   // }
-
-  //   // if (!isPhoneNumberValid(formData.primary_mobilenumber)) {
-  //   //   isValid = false;
-  //   // }
-
-  //   if (!isValid) {
-  //     setNextClicked(true);
-  //     updateErrorMessage("Please Enter required fields data");
-  //   } else {
-  //     setCurrentStep(currentStep + 1);
-  //     setNextClicked(false);
-  //     updateErrorMessage("");
-  //   }
-  // };
-
   const handleNext = () => {
     const formInputs = document.querySelectorAll(".FieldDiv input");
     let isValid = true;
-    let updatedFields = {};
+    let invalidFieldsArray = [];
 
     formInputs.forEach((input) => {
       const { name, validity, value } = input;
 
       if (input.hasAttribute("required") && !validity.valid) {
         isValid = false;
-        updatedFields[name] = true;
-      } else if (name === "primary_useremail" && !isEmailValid(value)) {
-        isValid = false;
-        updatedFields[name] = true;
+        invalidFieldsArray.push(name);
       } else if (
-        name === "primary_mobilenumber" &&
-        !isPhoneNumberValid(value)
+        (name === "primary_useremail" && !isEmailValid(value)) ||
+        (name === "primary_mobilenumber" && !isPhoneNumberValid(value))
       ) {
         isValid = false;
-        updatedFields[name] = true;
-      } else {
-        updatedFields[name] = false;
+        invalidFieldsArray.push(name);
       }
     });
 
     if (!isValid) {
       setNextClicked(true);
+      setInvalidFields(invalidFieldsArray);
       updateErrorMessage("Please Enter required fields data");
     } else {
       setCurrentStep(currentStep + 1);
       setNextClicked(false);
+      setInvalidFields([]);
       updateErrorMessage("");
     }
-
-    formInputs.forEach((input) => {
-      const { name } = input;
-      input.classList.toggle("error", updatedFields[name]);
-      input.classList.toggle("clrinput", !updatedFields[name]);
-    });
   };
-
-  // const handleNext = () => {
-  //   let isValid = true;
-  //   const updatedValidations = { ...fieldValidations };
-
-  //   Object.keys(updatedValidations).forEach((fieldName) => {
-  //     const fieldValue = formData[fieldName];
-
-  //     if (
-  //       fieldName !== " primary_contactname" &&
-  //       fieldName !== "primary_position"
-  //     ) {
-
-  //       if (
-  //         !fieldValue ||
-  //         (fieldName === " primary_mobilenumber" &&
-  //           !isPhoneNumberValid(fieldValue))
-  //       ) {
-  //         isValid = false;
-  //         updatedValidations[fieldName] = false;
-  //       }
-  //       if (
-  //         !fieldValue ||
-  //         (fieldName === " primary_useremail" && !isEmailValid(fieldValue))
-  //       ) {
-  //         isValid = false;
-  //         updatedValidations[fieldName] = false;
-  //       } else {
-  //         updatedValidations[fieldName] = true;
-  //       }
-  //     }
-  //   });
-
-  //   setFieldValidations(updatedValidations);
-
-  //   if (!isValid) {
-  //     updateErrorMessage("Please Enter required fields data");
-  //   } else {
-  //     setCurrentStep(currentStep + 1);
-  //     updateErrorMessage("");
-  //   }
-  // };
-
-  // const handleNext = () => {
-  //   let isValid = true;
-  //   const updatedValidations = { ...fieldValidations };
-
-  //   Object.keys(updatedValidations).forEach((fieldName) => {
-  //     const fieldValue = formData[fieldName];
-
-  //     if (
-  //       fieldName !=="primary_contactname" &&
-  //       fieldName !=="primary_position"
-  //     ) {
-  //       if (
-  //         !fieldValue ||
-  //         (fieldName === "primary_mobilenumber" &&
-  //           !isPhoneNumberValid(fieldValue))
-  //       ) {
-  //         isValid = false;
-  //         updatedValidations[fieldName] = false;
-  //       }
-  //       if (
-  //         !fieldValue ||
-  //         (fieldName === "primary_useremail" && !isEmailValid(fieldValue))
-  //       ) {
-  //         isValid = false;
-  //         updatedValidations[fieldName] = false;
-  //       } else {
-  //         updatedValidations[fieldName] = true;
-  //       }
-  //     } else if (fieldName === "primary_position" && !fieldValue?.trim()) {
-  //       isValid = false;
-  //       updatedValidations[fieldName] = false;
-  //     } else {
-  //       updatedValidations[fieldName] = true;
-  //     }
-  //   });
-
-  //   setFieldValidations(updatedValidations);
-
-  //   if (!isValid) {
-  //     updateErrorMessage("Please Enter required fields data");
-  //   } else {
-  //     setCurrentStep(currentStep + 1);
-  //     updateErrorMessage("");
-  //   }
-  // };
 
   const handlePrev = () => {
     if (currentStep > 0) {
@@ -210,10 +79,12 @@ const Firstform = ({ onChange }) => {
           type="text"
           placeholder="Primary Contact name"
           required
-          className={
-          nextClicked ? "error":"clrinput"
-          }
-          value={formData?.primary_contactname||""}
+          className={`${
+            nextClicked && invalidFields.includes("primary_contactname")
+              ? "error"
+              : "clrinput"
+          }`}
+          value={formData?.primary_contactname || ""}
           onChange={handleInputChange}
           name="primary_contactname"
         />
@@ -221,7 +92,11 @@ const Firstform = ({ onChange }) => {
           type="text"
           placeholder="Primary Contact email"
           required
-          className={fieldValidations.primary_useremail ? "clrinput" : "error"}
+          className={`${
+            nextClicked && invalidFields.includes("primary_useremail")
+              ? "error"
+              : "clrinput"
+          }`}
           value={formData?.primary_useremail}
           onChange={handleInputChange}
           name="primary_useremail"
@@ -230,9 +105,11 @@ const Firstform = ({ onChange }) => {
           type="text"
           placeholder="(201) 555-0123"
           required
-          className={
-            fieldValidations.primary_mobilenumber ? "clrinput" : "error"
-          }
+          className={`${
+            nextClicked && invalidFields.includes("primary_mobilenumber")
+              ? "error"
+              : "clrinput"
+          }`}
           value={formData?.primary_mobilenumber}
           onChange={handleInputChange}
           name="primary_mobilenumber"
@@ -241,7 +118,11 @@ const Firstform = ({ onChange }) => {
           type="text"
           placeholder="Position"
           required
-          className={fieldValidations.primary_position ? "clrinput" : "error"}
+          className={`${
+            nextClicked && invalidFields.includes("primary_position")
+              ? "error"
+              : "clrinput"
+          }`}
           value={formData?.primary_position}
           onChange={handleInputChange}
           name="primary_position"
@@ -257,7 +138,7 @@ const Firstform = ({ onChange }) => {
           Prev
         </button>
         <button className="next" onClick={handleNext}>
-          next
+          Next
         </button>
       </div>
     </div>
