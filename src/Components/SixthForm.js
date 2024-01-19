@@ -85,7 +85,7 @@ const SixthForm = () => {
       updatedFormData.masterId = "123";
       updatedFormData.childMasterId = "123";
       updatedFormData.pdf =
-        "https://onboarding.rankroverpro.com/terms-and-conditions-onboarding";
+        "https://onboarding.audiologyplus.com/terms-and-conditions-onboarding";
 
       const formDataObject = new FormData();
       Object.keys(updatedFormData).forEach((key) => {
@@ -129,14 +129,14 @@ const SixthForm = () => {
         <p>
           By electronically executing this agreement, you agree to all of the
           above
-          <span className="termslink" onClick={() => navigate("/terms")}>
-            terms and conditions
-            {/* <a
-              href="https://onboarding.rankroverpro.com/terms-and-conditions-onboarding"
+          <span >
+            <a
+              href="https://onboarding.audiologyplus.com/terms-and-conditions-onboarding"
               target="_blank"
+              className="termslink"
             >
               terms and conditions
-            </a> */}
+            </a>
           </span>
         </p>
       </div>

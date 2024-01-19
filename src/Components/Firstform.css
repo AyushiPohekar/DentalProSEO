@@ -3,13 +3,19 @@
   flex-direction: column;
   gap: 1rem;
 }
+.titlefirst {
+  font-weight: 700;
+
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  margin-bottom: 0;
+}
 .FieldDiv {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
- 
 }
 .clrinput {
   padding: 1rem;
@@ -56,35 +62,35 @@
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -2px rgba(0, 0, 0, 0.1);
 }
-.AddLocation{
-    background-color: #3B82F6;
-    width: 180px;
-    padding:10px 12px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.AddLocation {
+  background-color: #3b82f6;
+  width: 180px;
+  padding: 10px 12px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
-.checkboxdiv{
+.checkboxdiv {
   display: flex;
   gap: 2px;
 }
-.para{
+.para {
   text-align: center;
   font-size: larger;
 }
-.quizdiv{
+.quizdiv {
   display: flex;
   flex-direction: row;
   background-color: #e5e7eb;
   padding: 1rem 2rem;
   border: 25px;
 }
-.verifydiv{
+.verifydiv {
   width: 100px;
   height: 100px;
 }
-.Submitbtn{
+.Submitbtn {
   color: #fff;
   border: 0;
   border-radius: 50px;
@@ -93,38 +99,37 @@
   padding: 8px 30px;
   margin: 5px;
   font-size: 18px;
-  background: linear-gradient(to bottom,#44c767 5%,#50b01c 100%);
+  background: linear-gradient(to bottom, #44c767 5%, #50b01c 100%);
   background-color: #44c767;
-
 }
 .termslink {
   color: red;
   text-decoration: underline;
   cursor: pointer;
-
+  font-weight: 600;
 }
-.termslink{
+.termslink {
   padding: 0 5px;
 }
-.randomdiv{
-gap: 1rem;
+.randomdiv {
+  gap: 1rem;
   display: flex;
   justify-content: center;
   align-content: center;
   padding-top: 2rem;
 }
-.randomnumspan{
+.randomnumspan {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.btndiv{
+.btndiv {
   display: flex;
   align-items: center;
   justify-content: center;
   padding-top: 2rem;
 }
-.disbledbtn{
+.disbledbtn {
   background-color: rgba(128, 128, 128, 0.429);
   color: #fff;
   border: 0;
@@ -137,5 +142,5 @@ gap: 1rem;
 }
 .FieldDiv input:focus {
   outline: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); 
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }

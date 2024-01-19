@@ -11,25 +11,28 @@
   align-items: center;
   gap: 1rem;
   padding: 1rem;
+  justify-content: space-between;
 }
 .form_div{
   background-color: white;
   height: max-content;
   width: 55%;
-  border-radius: 15px;
-  padding: 2rem;
+  border-radius: 1rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  margin: 2rem 0;
 }
 .formtitle{
   text-align: center;
   font-size: 1.5rem;
-  line-height: 2rem
+ 
+  font-weight: 700;
 }
 .individualForms{
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
   width: 100%;
 }
 .errorMessage{
@@ -41,4 +44,8 @@
 }
 .footer{
   color: white;
+}
+.Rankroverdiv{
+
+  padding-top: 1.5rem;
 }

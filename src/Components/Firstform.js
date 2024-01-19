@@ -67,7 +67,7 @@ const Firstform = ({ onChange }) => {
 
   return (
     <div className="FirstFormDiv">
-      <h1>Primary Contact</h1>
+      <h1 className="titlefirst">Primary Contact</h1>
       <div>
         Please enter the contact information for the primary person who will
         manage and oversee your RankRover Pro onboarding. This contact will have
@@ -102,7 +102,7 @@ const Firstform = ({ onChange }) => {
           name="primary_useremail"
         />
         <input
-          type="text"
+          type="number"
           placeholder="(201) 555-0123"
           required
           className={`${

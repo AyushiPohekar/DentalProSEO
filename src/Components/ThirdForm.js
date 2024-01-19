@@ -120,7 +120,7 @@ const ThirdForm = ({ onChange }) => {
             required
           />
           <input
-            type="text"
+            type="number"
             placeholder="Zip"
             className={fieldValidations.pincode1 ? "clrinput" : "error"}
             value={formData?.pincode1}
@@ -132,7 +132,7 @@ const ThirdForm = ({ onChange }) => {
       </div>
 
       <input
-        type="text"
+        type="number"
         placeholder="(201) 555-0123"
         className={fieldValidations.thirdphoneNo ? "clrinput" : "error"}
         value={formData?.thirdphoneNo}

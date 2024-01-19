@@ -105,7 +105,7 @@ const SecondForm = ({ onChange }) => {
           onChange={handleInputChange}
         />
         <input
-          type="text"
+          type="number"
           placeholder="(201) 555-0123"
           required
           className={`${
