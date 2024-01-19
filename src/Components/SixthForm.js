@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import MultiStepFormContext from "./MultiStepFormContext";
 import { useNavigate } from "react-router-dom";
 import { FiRefreshCw } from "react-icons/fi";
-import * as html2pdf from "html2pdf.js";
+import axios from "axios";
 
 const SixthForm = () => {
   const navigate = useNavigate();
@@ -30,26 +30,58 @@ const SixthForm = () => {
     generateRandomNumbers();
   };
 
-  const convertToPDF = async (htmlContent) => {
-    const pdfOptions = {
-      margin: 10,
-      filename: "document.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    };
+  // const handleSubmit = async () => {
+  //   const expectedAnswer = randomNumbers.num1 + randomNumbers.num2;
 
-    const pdf = await html2pdf().from(htmlContent, pdfOptions).outputPdf();
-    return pdf;
-  };
+  //   if (parseInt(userAnswer) === expectedAnswer) {
+  //     setIsAnswerCorrect(true);
+  //     const updatedFormData = { ...formData };
+  //     // updatedFormData = {
+  //     //   ...updatedFormData,
+  //     //   newKey3: 'value3',
+  //     //   newKey4: 'value4'
+  //     // };
+
+  //     updatedFormData.masterId = "123";
+  //     updatedFormData.childMasterId = "123";
+  //     updatedFormData.pdf =
+  //       "https://onboarding.rankroverpro.com/terms-and-conditions-onboarding";
+
+  //           const formDataObject = new FormData();
+  //           Object.keys(updatedFormData).forEach((key) => {
+  //             formDataObject.append(key, updatedFormData[key]);
+  //           });
+  //     // console.log(formDataObject)
+  //     // console.log(updatedFormData);
+  //     try {
+  //       const response = await fetch("http://localhost:3001/rmployee/create", {
+  //         method: "POST",
+  //         body: formDataObject,
+  //       });
+
+  //       if (response.ok) {
+  //         alert("Form submitted successfully!");
+
+  //         navigate("/success");
+  //       } else {
+  //         console.error("Failed to submit the form");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error occurred while submitting the form", error);
+  //     }
+  //   } else {
+  //     setIsAnswerCorrect(false);
+  //     alert("Incorrect captcha");
+  //   }
+  // };
 
   const handleSubmit = async () => {
     const expectedAnswer = randomNumbers.num1 + randomNumbers.num2;
 
     if (parseInt(userAnswer) === expectedAnswer) {
       setIsAnswerCorrect(true);
-      const updatedFormData = { ...formData };
 
+      const updatedFormData = { ...formData };
       updatedFormData.masterId = "123";
       updatedFormData.childMasterId = "123";
       updatedFormData.pdf =
@@ -59,20 +91,17 @@ const SixthForm = () => {
       Object.keys(updatedFormData).forEach((key) => {
         formDataObject.append(key, updatedFormData[key]);
       });
-
+     console.log(updatedFormData)
       try {
-        const response = await fetch(
-          "http://192.168.1.5:3001/rmployee/create",
-          {
-            method: "POST",
-            body: formDataObject,
-          }
+        const response = await axios.post(
+          "http://localhost:3001/rmployee/create",
+         updatedFormData
         );
 
-        if (response.ok) {
-          alert("Form submitted successfully!");
+        if (response.status===201) {
+           alert("Form submitted successfully!");
 
-          navigate("/success");
+           navigate("/success");
         } else {
           console.error("Failed to submit the form");
         }

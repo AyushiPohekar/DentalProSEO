@@ -59,7 +59,7 @@ const ThirdForm = ({ onChange }) => {
     setCurrentStep(currentStep - 1);
   };
   const handleInputChange = (e) => {
-    console.log(e);
+    //console.log(e);
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
     onChange({ [name]: value });
