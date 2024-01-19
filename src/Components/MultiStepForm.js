@@ -7,7 +7,7 @@ import { Provider } from "./MultiStepFormContext";
 import FourthForm from "./FourthForm";
 import FifthForm from "./FifthForm";
 import SixthForm from "./SixthForm";
-
+import "./MultiStepForm.css"
 const { Step } = Steps;
 
 const MultiStepForm = () => {
@@ -56,7 +56,7 @@ const MultiStepForm = () => {
         updateErrorMessage,
       }}
     >
-      <Steps current={currentStep}>
+      <Steps current={currentStep} className="StepDiv">
         {stepComponents.map((_, index) => (
           <Step
             key={index}

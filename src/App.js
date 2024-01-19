@@ -33,7 +33,7 @@ function App() {
         </Routes>
      
 
-      <div className="footer">Copyright © 2024 RankRover Pro. All rights Reserved.</div>
+      <div className="footer">Copyright © 2024 Auxo Innovations. All rights Reserved.</div>
     </div>
   );
 }

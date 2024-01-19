@@ -34,7 +34,7 @@
   padding: 8px 30px;
   margin: 5px;
   font-size: 18px;
-  background: #0fae76;
+  background: #f2295b;
 }
 .next {
   color: #fff;
@@ -45,7 +45,7 @@
   padding: 8px 30px;
   margin: 5px;
   font-size: 18px;
-  background: #0fae76;
+  background: #f2295b;
 }
 .error {
   outline: 1px solid red;
@@ -93,7 +93,8 @@
   padding: 8px 30px;
   margin: 5px;
   font-size: 18px;
-  background: #0fae76;
+  background: linear-gradient(to bottom,#44c767 5%,#50b01c 100%);
+  background-color: #44c767;
 
 }
 .termslink {

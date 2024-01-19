@@ -1,8 +1,9 @@
 .imgrankdiv{
-    background-color: #ffffff;
-    width: 300px;
-    height: 100px;
+    background-color: linear-gradient(to right, #FE6A37, #f2295b);
+    width: 24rem;
+    /* //height: 100px; */
     border-radius: 5px;
+    object-fit: contain;
 }
 img{
     width: 100%;
