@@ -62,7 +62,7 @@
   padding: 8px 30px;
   margin: 5px;
   font-size: 18px;
-  background: #f2295b;
+  background:#3cbde0;
 }
 .next {
   color: #fff;
@@ -73,7 +73,7 @@
   padding: 8px 30px;
   margin: 5px;
   font-size: 18px;
-  background: #f2295b;
+  background:#3cbde0;
 }
 .error {
   outline: 1px solid red;

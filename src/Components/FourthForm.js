@@ -41,42 +41,80 @@ const FourthForm = ({ onChange }) => {
     onChange({ [name]: value });
   };
 
-  const handleSubmit = async () => {
-    const expectedAnswer = randomNumbers.num1 + randomNumbers.num2;
+  // const handleSubmit = async () => {
+  //   const expectedAnswer = randomNumbers.num1 + randomNumbers.num2;
 
-    if (parseInt(userAnswer) === expectedAnswer) {
-      setIsAnswerCorrect(true);
+  //   if (parseInt(userAnswer) === expectedAnswer) {
+  //     setIsAnswerCorrect(true);
 
-      const updatedFormData = { ...formData };
-      updatedFormData.masterId = "123";
-      updatedFormData.childMasterId = "123";
+  //     const updatedFormData = { ...formData };
+  //     updatedFormData.masterId = "123";
+  //     updatedFormData.childMasterId = "123";
 
 
     
-     console.log(updatedFormData)
-      try {
-        const response = await axios.post(
-          "http://localhost:3001/seo-rankrover/create",
-         updatedFormData
-        );
+  //    console.log(updatedFormData)
+  //     try {
+  //       const response = await axios.post(
+  //         "http://localhost:3001/seo-rankrover/create",
+  //        updatedFormData
+  //       );
 
-        if (response.status===201) {
-           alert("Form submitted successfully!");
+  //       if (response.status===201) {
+  //          alert("Form submitted successfully!");
 
-           navigate("/success");
-        } else {
-          console.error("Failed to submit the form");
+  //          navigate("/success");
+  //       } else {
+  //         console.error("Failed to submit the form");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error occurred while submitting the form", error);
+  //     }
+  //   } else {
+  //     setIsAnswerCorrect(false);
+  //     alert("Incorrect captcha");
+  //   }
+  // };
+
+  const handleSubmit = async () => {
+    const expectedAnswer = randomNumbers.num1 + randomNumbers.num2;
+  
+    if (parseInt(userAnswer) === expectedAnswer) {
+      setIsAnswerCorrect(true);
+  
+      // Check if required fields are filled
+      const requiredFields = ["web_optimisedbyseo", "optimisation_target_keys", "reporting_keyword_auditinfo"];
+      const isAllFieldsFilled = requiredFields.every(field => formData[field]);
+  
+      if (isAllFieldsFilled) {
+        const updatedFormData = { ...formData };
+        updatedFormData.masterId = "123";
+        updatedFormData.childMasterId = "123";
+  
+        try {
+          const response = await axios.post(
+            "http://localhost:3001/seo-rankrover/create",
+            updatedFormData
+          );
+  
+          if (response.status === 201) {
+            alert("Form submitted successfully!");
+            navigate("/success");
+          } else {
+            console.error("Failed to submit the form");
+          }
+        } catch (error) {
+          console.error("Error occurred while submitting the form", error);
         }
-      } catch (error) {
-        console.error("Error occurred while submitting the form", error);
+      } else {
+        alert("Please fill in all required fields");
       }
     } else {
       setIsAnswerCorrect(false);
       alert("Incorrect captcha");
     }
   };
-
- 
+  
   return (
     <div className="FirstFormDiv">
       <h1>SEO</h1>

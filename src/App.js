@@ -5,22 +5,20 @@ import Rankover from "./Components/Rankroverdiv/Rankover";
 import FormSubmiitted from "./Components/formsubmitted/FormSubmiitted";
 import Form from "./Components/Form";
 
-
 function App() {
   return (
     <div className="App">
       <div className="Rankroverdiv">
         <Rankover />
       </div>
-    
-        <Routes>
-          <Route path="/" element={<Form />} />
-          <Route path="/success" element={<FormSubmiitted />} />
-        
-        </Routes>
-   
+
+      <Routes>
+        <Route path="/" element={<Form />} />
+        <Route path="/success" element={<FormSubmiitted />} />
+      </Routes>
+
       <div className="footer">
-        Copyright © 2024 Auxo Innovations. All rights Reserved.
+        Copyright © 2024 Dentapro Digital. All rights Reserved.
       </div>
     </div>
   );
