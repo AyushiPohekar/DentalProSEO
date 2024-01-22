@@ -6,7 +6,7 @@ import { Steps } from "antd";
 import { Provider } from "./MultiStepFormContext";
 import FourthForm from "./FourthForm";
 
-import "./MultiStepForm.css"
+
 const { Step } = Steps;
 
 const MultiStepForm = () => {

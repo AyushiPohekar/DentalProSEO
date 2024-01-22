@@ -41,40 +41,7 @@ const FourthForm = ({ onChange }) => {
     onChange({ [name]: value });
   };
 
-  // const handleSubmit = async () => {
-  //   const expectedAnswer = randomNumbers.num1 + randomNumbers.num2;
 
-  //   if (parseInt(userAnswer) === expectedAnswer) {
-  //     setIsAnswerCorrect(true);
-
-  //     const updatedFormData = { ...formData };
-  //     updatedFormData.masterId = "123";
-  //     updatedFormData.childMasterId = "123";
-
-
-    
-  //    console.log(updatedFormData)
-  //     try {
-  //       const response = await axios.post(
-  //         "http://localhost:3001/seo-rankrover/create",
-  //        updatedFormData
-  //       );
-
-  //       if (response.status===201) {
-  //          alert("Form submitted successfully!");
-
-  //          navigate("/success");
-  //       } else {
-  //         console.error("Failed to submit the form");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error occurred while submitting the form", error);
-  //     }
-  //   } else {
-  //     setIsAnswerCorrect(false);
-  //     alert("Incorrect captcha");
-  //   }
-  // };
 
   const handleSubmit = async () => {
     const expectedAnswer = randomNumbers.num1 + randomNumbers.num2;

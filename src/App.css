@@ -1,9 +1,7 @@
-.App{
-  /* background-color: #0fae76; 
-  background-image: linear-gradient(to right, #383987, transparent);  */
-  background: linear-gradient(to right, #3CBDE0, #3A569F);
+.App {
+  background: linear-gradient(to right, #3cbde0, #3a569f);
   width: 100%;
-  /* height: 150vh; */
+
   min-height: 100vh;
   height: max-content;
   display: flex;
@@ -13,7 +11,7 @@
   padding: 1rem;
   justify-content: space-between;
 }
-.form_div{
+.form_div {
   background-color: white;
   height: max-content;
   width: 55%;
@@ -25,27 +23,25 @@
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   margin: 2rem 0;
 }
-.formtitle{
+.formtitle {
   text-align: center;
   font-size: 1.5rem;
- 
+
   font-weight: 700;
 }
-.individualForms{
-  /* margin-top: 2rem; */
+.individualForms {
   width: 100%;
 }
-.errorMessage{
+.errorMessage {
   margin-top: 1.5rem;
   text-align: center;
   color: red;
   font-size: larger;
   font-weight: 700;
 }
-.footer{
+.footer {
   color: white;
 }
-.Rankroverdiv{
-
+.Rankroverdiv {
   padding-top: 1.5rem;
 }
