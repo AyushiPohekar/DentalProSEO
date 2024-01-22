@@ -17,15 +17,7 @@ const Firstform = ({ onChange }) => {
   const { currentStep, setCurrentStep } = useContext(MultiStepFormContext);
   const [invalidFields, setInvalidFields] = useState([]);
 
-  const isEmailValid = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
 
-  const isPhoneNumberValid = (phoneNumber) => {
-    const phoneRegex = /^\d{3}-?\d{3}-?\d{4}$/;
-    return phoneRegex.test(phoneNumber);
-  };
 
   const handleNext = () => {
     const formInputs = document.querySelectorAll(".FieldDiv input");
@@ -38,13 +30,7 @@ const Firstform = ({ onChange }) => {
       if (input.hasAttribute("required") && !validity.valid) {
         isValid = false;
         invalidFieldsArray.push(name);
-      } else if (
-        (name === "primary_useremail" && !isEmailValid(value)) ||
-        (name === "primary_mobilenumber" && !isPhoneNumberValid(value))
-      ) {
-        isValid = false;
-        invalidFieldsArray.push(name);
-      }
+      } 
     });
 
     if (!isValid) {
@@ -67,66 +53,122 @@ const Firstform = ({ onChange }) => {
 
   return (
     <div className="FirstFormDiv">
-      <h1 className="titlefirst">Primary Contact</h1>
-      <div>
-        Please enter the contact information for the primary person who will
-        manage and oversee your RankRover Pro onboarding. This contact will have
-        administrative access to all aspects of our service and be the person we
-        communicate with most frequently.
-      </div>
+      <h1 className="titlefirst">Practice Information</h1>
+
       <div className="FieldDiv">
+        <div className="innerDiv">
+          <label>Please provide a brief description about your practice.</label>
+          <input
+            type="text"
+            placeholder="Enter here..."
+            required
+            className={`${
+              nextClicked && invalidFields.includes("brief_description")
+                ? "error"
+                : "clrinput"
+            }`}
+            value={formData?.brief_description || ""}
+            onChange={handleInputChange}
+            name="brief_description"
+          />
+        </div>
+        <div className="innerDiv">
+          <label>
+            Provide details about the main services that you provide at your
+            practice. Please feel free to include links if descriptions are on
+            your website.
+          </label>
+          <input
+            type="text"
+            placeholder="Enter here..."
+            required
+            className={`${
+              nextClicked && invalidFields.includes("main_services")
+                ? "error"
+                : "clrinput"
+            }`}
+            value={formData?.main_services}
+            onChange={handleInputChange}
+            name="main_services"
+          />
+        </div>
+        <div className="innerDiv">
+          <label>
+            Which markets do you operate in (please provide specific locations -
+            city and state)?
+          </label>
+          <input
+            type="text"
+            placeholder="Location"
+            required
+            className={`${
+              nextClicked && invalidFields.includes("operation_market_location")
+                ? "error"
+                : "clrinput"
+            }`}
+            value={formData?.operation_market_location}
+            onChange={handleInputChange}
+            name="operation_market_location"
+          />
+          <div className="moreinnerdiv">
+            <input
+              type="text"
+              placeholder="City"
+              required
+              className={`${
+                nextClicked && invalidFields.includes("operation_market_city")
+                  ? "error"
+                  : "clrinput"
+              }`}
+              value={formData?.operation_market_city}
+              onChange={handleInputChange}
+              name="operation_market_city"
+            />
+            <input
+              type="text"
+              placeholder="State"
+              required
+              className={`${
+                nextClicked && invalidFields.includes("operation_market_state")
+                  ? "error"
+                  : "clrinput"
+              }`}
+              value={formData?.operation_market_state}
+              onChange={handleInputChange}
+              name="operation_market_state"
+            />
+            <input
+              type="text"
+              placeholder="Zip"
+              required
+              className={`${
+                nextClicked &&
+                invalidFields.includes("operation_market_pincode")
+                  ? "error"
+                  : "clrinput"
+              }`}
+              value={formData?.operation_market_pincode}
+              onChange={handleInputChange}
+              name="operation_market_pincode"
+            />
+          </div>
+        </div>
+        <div className="innerDiv">
+        <label>Are there any seasonal trends that affect your business?</label>
         <input
-          type="text"
-          placeholder="Primary Contact name"
-          required
-          className={`${
-            nextClicked && invalidFields.includes("primary_contactname")
-              ? "error"
-              : "clrinput"
-          }`}
-          value={formData?.primary_contactname || ""}
-          onChange={handleInputChange}
-          name="primary_contactname"
-        />
-        <input
-          type="text"
-          placeholder="Primary Contact email"
-          required
-          className={`${
-            nextClicked && invalidFields.includes("primary_useremail")
-              ? "error"
-              : "clrinput"
-          }`}
-          value={formData?.primary_useremail}
-          onChange={handleInputChange}
-          name="primary_useremail"
-        />
-        <input
-          type="number"
-          placeholder="(201) 555-0123"
-          required
-          className={`${
-            nextClicked && invalidFields.includes("primary_mobilenumber")
-              ? "error"
-              : "clrinput"
-          }`}
-          value={formData?.primary_mobilenumber}
-          onChange={handleInputChange}
-          name="primary_mobilenumber"
-        />
-        <input
-          type="text"
-          placeholder="Position"
-          required
-          className={`${
-            nextClicked && invalidFields.includes("primary_position")
-              ? "error"
-              : "clrinput"
-          }`}
-          value={formData?.primary_position}
-          onChange={handleInputChange}
-          name="primary_position"
-        />
+            type="text"
+            placeholder="Enter here..."
+            required
+            className={`${
+              nextClicked && invalidFields.includes("seasonal_trends")
+                ? "error"
+                : "clrinput"
+            }`}
+            value={formData?.seasonal_trends}
+            onChange={handleInputChange}
+            name="seasonal_trends"
+          />
+        </div>
       </div>
 
       <div className="btns">

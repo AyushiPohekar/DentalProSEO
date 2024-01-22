@@ -38,9 +38,7 @@ const MultiStepForm = () => {
     Firstform,
     SecondForm,
     ThirdForm,
-    FourthForm,
-    FifthForm,
-    SixthForm,
+    FourthForm
   ];
 
   return (

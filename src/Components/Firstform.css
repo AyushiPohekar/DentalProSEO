@@ -20,10 +20,32 @@
 .clrinput {
   padding: 1rem;
   border-radius: 50px;
-  border: none;
+  border: 1px solid #e5e7eb;
   outline: 1px solid transparent;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+.FieldDiv input:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.innerDiv{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.moreinnerdiv{
+  display: flex;
+ justify-content: space-between;
+
+}
+.moreinnerdiv input{
+  width: 28%;
+}
+.secondforminnerdiv{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 .btns {
   display: flex;
@@ -139,8 +161,4 @@
   padding: 8px 30px;
   margin: 5px;
   font-size: 18px;
-}
-.FieldDiv input:focus {
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }

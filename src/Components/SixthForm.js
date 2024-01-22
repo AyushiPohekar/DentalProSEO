@@ -30,50 +30,7 @@ const SixthForm = () => {
     generateRandomNumbers();
   };
 
-  // const handleSubmit = async () => {
-  //   const expectedAnswer = randomNumbers.num1 + randomNumbers.num2;
-
-  //   if (parseInt(userAnswer) === expectedAnswer) {
-  //     setIsAnswerCorrect(true);
-  //     const updatedFormData = { ...formData };
-  //     // updatedFormData = {
-  //     //   ...updatedFormData,
-  //     //   newKey3: 'value3',
-  //     //   newKey4: 'value4'
-  //     // };
-
-  //     updatedFormData.masterId = "123";
-  //     updatedFormData.childMasterId = "123";
-  //     updatedFormData.pdf =
-  //       "https://onboarding.rankroverpro.com/terms-and-conditions-onboarding";
-
-  //           const formDataObject = new FormData();
-  //           Object.keys(updatedFormData).forEach((key) => {
-  //             formDataObject.append(key, updatedFormData[key]);
-  //           });
-  //     // console.log(formDataObject)
-  //     // console.log(updatedFormData);
-  //     try {
-  //       const response = await fetch("http://localhost:3001/rmployee/create", {
-  //         method: "POST",
-  //         body: formDataObject,
-  //       });
-
-  //       if (response.ok) {
-  //         alert("Form submitted successfully!");
-
-  //         navigate("/success");
-  //       } else {
-  //         console.error("Failed to submit the form");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error occurred while submitting the form", error);
-  //     }
-  //   } else {
-  //     setIsAnswerCorrect(false);
-  //     alert("Incorrect captcha");
-  //   }
-  // };
+  
 
   const handleSubmit = async () => {
     const expectedAnswer = randomNumbers.num1 + randomNumbers.num2;
@@ -84,6 +41,7 @@ const SixthForm = () => {
       const updatedFormData = { ...formData };
       updatedFormData.masterId = "123";
       updatedFormData.childMasterId = "123";
+      updatedFormData.subject = "Audiology Plus Onboarding Form Submission";
       updatedFormData.pdf =
         "https://onboarding.audiologyplus.com/terms-and-conditions-onboarding";
 

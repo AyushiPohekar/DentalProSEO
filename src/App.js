@@ -4,7 +4,7 @@ import MultiStepForm from "./Components/MultiStepForm";
 import Rankover from "./Components/Rankroverdiv/Rankover";
 import FormSubmiitted from "./Components/formsubmitted/FormSubmiitted";
 import Form from "./Components/Form";
-import Terms from "./Components/TermsAndconditions/Terms";
+
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Form />} />
           <Route path="/success" element={<FormSubmiitted />} />
-          <Route path="/terms" element={<Terms />} />
+        
         </Routes>
    
       <div className="footer">

@@ -11,8 +11,7 @@ const Popup = ({onClose,onNextStep}) => {
     <div className="modal">
       <div className="modal-content">
         <h2>
-          Please be sure to check the Terms of Service Agreement and hit submit!
-          You should receive a Thank you message if completed!
+        Please be sure to hit submit! You should receive a Thank you message if completed.
         </h2>
         <button className="closebtn" onClick={handleClose}>Close</button>
       </div>

@@ -9,16 +9,6 @@ const SecondForm = ({ onChange }) => {
   const [invalidFields, setInvalidFields] = useState([]);
   const { currentStep, setCurrentStep } = useContext(MultiStepFormContext);
 
-  const isEmailValid = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const isPhoneNumberValid = (phoneNumber) => {
-    const phoneRegex = /^\d{3}-?\d{3}-?\d{4}$/;
-    return phoneRegex.test(phoneNumber);
-  };
-
   const handleNext = () => {
     const formInputs = document.querySelectorAll(".FieldDiv input");
     let isValid = true;
@@ -28,16 +18,6 @@ const SecondForm = ({ onChange }) => {
       const { name, validity, value } = input;
 
       if (input.hasAttribute("required") && !validity.valid) {
-        isValid = false;
-        invalidFieldsArray.push(name);
-      }
-
-      if (name === "leadEmail" && !isEmailValid(value)) {
-        isValid = false;
-        invalidFieldsArray.push(name);
-      }
-
-      if (name === "leadmobilenumber" && !isPhoneNumberValid(value)) {
         isValid = false;
         invalidFieldsArray.push(name);
       }
@@ -73,48 +53,93 @@ const SecondForm = ({ onChange }) => {
 
   return (
     <>
-      <h1>Lead Notifications</h1>
-      <div>
-        Please enter the contact details where new patient lead notifications
-        should be sent. This contact should monitor their email constantly and
-        be responsible for following up on any appointment inquiries in a timely
-        fashion. Only one email can be connected at a time but can be changed at
-        any point.
-      </div>
+      <h1>Customers & Competition</h1>
+
       <div className="FieldDiv">
-        <input
-          type="text"
-          placeholder="name"
-          required
-          className={`${
-            nextClicked && invalidFields.includes("leadname") ? "error" : "clrinput"
-          }`}
-          value={formData?.leadname}
-          name="leadname"
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          placeholder="email"
-          required
-          className={`${
-            nextClicked && invalidFields.includes("leadEmail") ? "error" : "clrinput"
-          }`}
-          value={formData?.leadEmail}
-          name="leadEmail"
-          onChange={handleInputChange}
-        />
-        <input
-          type="number"
-          placeholder="(201) 555-0123"
-          required
-          className={`${
-            nextClicked && invalidFields.includes("leadmobilenumber") ? "error" : "clrinput"
-          }`}
-          value={formData?.leadmobilenumber}
-          name="leadmobilenumber"
-          onChange={handleInputChange}
-        />
+        <div className="innerDiv">
+          <label>
+            Who are your ideal customers? Please define your target audience.
+          </label>
+          <input
+            type="text"
+            placeholder="Enter here..."
+            required
+            className={`${
+              nextClicked && invalidFields.includes("ideal_customers")
+                ? "error"
+                : "clrinput"
+            }`}
+            value={formData?.ideal_customers || ""}
+            onChange={handleInputChange}
+            name="ideal_customers"
+          />
+        </div>
+        <div className="innerDiv">
+          <label>Why do your best customers choose you?</label>
+          <input
+            type="text"
+            placeholder="Enter here..."
+            required
+            className={`${
+              nextClicked && invalidFields.includes("why_customers_choose")
+                ? "error"
+                : "clrinput"
+            }`}
+            value={formData?.why_customers_choose || ""}
+            onChange={handleInputChange}
+            name="why_customers_choose"
+          />
+        </div>
+        <div className="innerDiv">
+          <label>What makes you different from your competitors?</label>
+          <input
+            type="text"
+            placeholder="Enter here..."
+            required
+            className={`${
+              nextClicked && invalidFields.includes("what_makes_you_diff")
+                ? "error"
+                : "clrinput"
+            }`}
+            value={formData?.what_makes_you_diff || ""}
+            onChange={handleInputChange}
+            name="what_makes_you_diff"
+          />
+        </div>
+        <div className="innerDiv">
+          <label>
+            Who are your main competitors? Please share their website URLs, if
+            possible.
+          </label>
+          <div className="secondforminnerdiv">
+            <input
+              type="text"
+              placeholder="Enter here..."
+              required
+              className={`${
+                nextClicked && invalidFields.includes("main_competitors")
+                  ? "error"
+                  : "clrinput"
+              }`}
+              value={formData?.main_competitors || ""}
+              onChange={handleInputChange}
+              name="main_competitors"
+            />
+            <input
+              type="text"
+              placeholder="Enter here..."
+              required
+              className={`${
+                nextClicked && invalidFields.includes("main_competitors_url")
+                  ? "error"
+                  : "clrinput"
+              }`}
+              value={formData?.main_competitors_url || ""}
+              onChange={handleInputChange}
+              name="main_competitors_url"
+            />
+          </div>
+        </div>
       </div>
 
       <div className="btns">

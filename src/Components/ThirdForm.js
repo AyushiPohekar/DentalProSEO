@@ -1,62 +1,54 @@
 import React, { useContext, useState } from "react";
 import MultiStepFormContext from "./MultiStepFormContext";
-import AddressLocation from "./AddressLocation/AddressLocation";
+import Popup from "./Popup/Popup";
 
 const ThirdForm = ({ onChange }) => {
   const { formData, setFormData, errorMessage, updateErrorMessage } =
     useContext(MultiStepFormContext);
-  const [tooglelocation, setToggleLocation] = useState(false);
   const [nextClicked, setNextClicked] = useState(false);
-  const [fieldValidations, setFieldValidations] = useState({
-    businessname: true,
-    streetaddress1: true,
-    city1: true,
-    state1: true,
-    pincode1: true,
-    thirdphoneNo: true,
-    businessWebsite: true,
-  });
-
+  const [invalidFields, setInvalidFields] = useState([]);
+  const [openmodal, setOpenModal] = useState(false);
   const { currentStep, setCurrentStep } = useContext(MultiStepFormContext);
 
-  const isPhoneNumberValid = (phoneNumber) => {
-    const phoneRegex = /^\d{3}-?\d{3}-?\d{4}$/;
-    return phoneRegex.test(phoneNumber);
-  };
-
   const handleNext = () => {
+    const formInputs = document.querySelectorAll(".FieldDiv input");
     let isValid = true;
-    const updatedValidations = { ...fieldValidations };
+    let invalidFieldsArray = [];
 
-    Object.keys(updatedValidations).forEach((fieldName) => {
-      const fieldValue = formData[fieldName];
+    formInputs.forEach((input) => {
+      const { name, validity, value } = input;
 
-      if (fieldName !== "streetaddress2") {
-     
-        if (
-          !fieldValue ||
-          (fieldName === "thirdphoneNo" && !isPhoneNumberValid(fieldValue))
-        ) {
-          isValid = false;
-          updatedValidations[fieldName] = false;
-        } else {
-          updatedValidations[fieldName] = true;
-        }
+      if (input.hasAttribute("required") && !validity.valid) {
+        isValid = false;
+        invalidFieldsArray.push(name);
       }
     });
 
-    setFieldValidations(updatedValidations);
-
     if (!isValid) {
+      setNextClicked(true);
+      setInvalidFields(invalidFieldsArray);
       updateErrorMessage("Please Enter required fields data");
+
+      formInputs.forEach((input) => {
+        const { name } = input;
+        input.classList.toggle("error", invalidFieldsArray.includes(name));
+        input.classList.toggle("clrinput", !invalidFieldsArray.includes(name));
+      });
     } else {
-      setCurrentStep(currentStep + 1);
+      // setCurrentStep(currentStep + 1);
+      setOpenModal(true);
+      setNextClicked(false);
+      setInvalidFields([]);
       updateErrorMessage("");
     }
   };
 
   const handlePrev = () => {
     setCurrentStep(currentStep - 1);
+  };
+  const closePopup = () => {
+    setOpenModal(false);
+    setCurrentStep(currentStep + 1);
   };
   const handleInputChange = (e) => {
     //console.log(e);
@@ -66,105 +58,83 @@ const ThirdForm = ({ onChange }) => {
   };
   return (
     <div className="FirstFormDiv">
-      <h1>Primary Contact</h1>
-      <div>
-        Please enter the contact information for the primary person who will
-        manage and oversee your RankRover Pro onboarding. This contact will have
-        administrative access to all aspects of our service and be the person we
-        communicate with most frequently.
-      </div>
+      <h1>Website Information</h1>
+
       <div className="FieldDiv">
-        <input
-          type="text"
-          placeholder="Business name"
-          required
-          className={fieldValidations.businessname ? "clrinput" : "error"}
-          value={formData?.businessname}
-          onChange={handleInputChange}
-          name="businessname"
-        />
-        <input
-          type="text"
-          placeholder="Street Address"
-          required
-          className={fieldValidations.streetaddress1 ? "clrinput" : "error"}
-          value={formData?.streetaddress1}
-          onChange={handleInputChange}
-          name="streetaddress1"
-        />
-        <input
-          type="text"
-          placeholder="Street Address 2 (optional)"
-          className={"clrinput"}
-          value={formData?.streetaddress2}
-          onChange={handleInputChange}
-          name="streetaddress2"
-        />
-        <div>
+        <div className="innerDiv">
+          <label>
+            How do you measure the success of your website/platform?
+          </label>
           <input
             type="text"
-            placeholder="city"
-            className={fieldValidations.city1 ? "clrinput" : "error"}
-            value={formData?.city1}
-            onChange={handleInputChange}
-            name="city1"
+            placeholder="Enter here..."
             required
+            className={`${
+              nextClicked && invalidFields.includes("success_of_your_website")
+                ? "error"
+                : "clrinput"
+            }`}
+            value={formData?.success_of_your_website || ""}
+            onChange={handleInputChange}
+            name="success_of_your_website"
           />
+        </div>
+        <div className="innerDiv">
+          <label>
+            Why do you think somebody who may land on your website does not
+            convert?
+          </label>
           <input
             type="text"
-            placeholder="State"
-            className={fieldValidations.state1 ? "clrinput" : "error"}
-            value={formData?.state1}
-            onChange={handleInputChange}
-            name="state1"
+            placeholder="Enter here..."
             required
+            className={`${
+              nextClicked && invalidFields.includes("does_not_convert")
+                ? "error"
+                : "clrinput"
+            }`}
+            value={formData?.does_not_convert || ""}
+            onChange={handleInputChange}
+            name="does_not_convert"
           />
+        </div>
+        <div className="innerDiv">
+          <label>
+          Which actions on the website are most important to you? I.e. apart from calling to book an appointment, is there another action you want visitors to take when they visit your website?
+          </label>
           <input
-            type="number"
-            placeholder="Zip"
-            className={fieldValidations.pincode1 ? "clrinput" : "error"}
-            value={formData?.pincode1}
-            onChange={handleInputChange}
-            name="pincode1"
+            type="text"
+            placeholder="Enter here..."
             required
+            className={`${
+              nextClicked && invalidFields.includes("actions_most_imp")
+                ? "error"
+                : "clrinput"
+            }`}
+            value={formData?.actions_most_imp|| ""}
+            onChange={handleInputChange}
+            name="actions_most_imp"
+          />
+        </div>
+        <div className="innerDiv">
+          <label>
+          Have you invested in any digital marketing activities in the past? This could include Google Adwords, Facebook Ads, etc. If so, please tell us why the investment was successful or not?
+          </label>
+          <input
+            type="text"
+            placeholder="Enter here..."
+            required
+            className={`${
+              nextClicked && invalidFields.includes("invested_digitalmarketing_activities")
+                ? "error"
+                : "clrinput"
+            }`}
+            value={formData?.invested_digitalmarketing_activities || ""}
+            onChange={handleInputChange}
+            name="invested_digitalmarketing_activities"
           />
         </div>
       </div>
-
-      <input
-        type="number"
-        placeholder="(201) 555-0123"
-        className={fieldValidations.thirdphoneNo ? "clrinput" : "error"}
-        value={formData?.thirdphoneNo}
-        onChange={handleInputChange}
-        name="thirdphoneNo"
-        required
-      />
-
-      <input
-        type="text"
-        placeholder="Business Website"
-        className={fieldValidations.businessWebsite ? "clrinput" : "error"}
-        value={formData?.businessWebsite}
-        onChange={handleInputChange}
-        name="businessWebsite"
-        required
-      />
-
-      <button
-        className="AddLocation"
-        onClick={() => setToggleLocation(!tooglelocation)}
-      >
-        + Add Location
-      </button>
-
-      {tooglelocation && (
-        <>
-          <AddressLocation number={"one"} onChange={onChange}/>
-          <AddressLocation number={"two"} onChange={onChange}/>
-          <AddressLocation number={"three"} onChange={onChange}/>
-        </>
-      )}
 
       <div className="btns">
         <button className="prev" onClick={handlePrev}>
@@ -174,6 +144,7 @@ const ThirdForm = ({ onChange }) => {
           next
         </button>
       </div>
+      {openmodal && <Popup onClose={closePopup} onNextStep={closePopup} />}
     </div>
   );
 };
