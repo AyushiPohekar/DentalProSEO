@@ -5,8 +5,7 @@ import ThirdForm from "./ThirdForm";
 import { Steps } from "antd";
 import { Provider } from "./MultiStepFormContext";
 import FourthForm from "./FourthForm";
-import FifthForm from "./FifthForm";
-import SixthForm from "./SixthForm";
+
 import "./MultiStepForm.css"
 const { Step } = Steps;
 

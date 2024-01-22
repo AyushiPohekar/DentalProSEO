@@ -1,10 +1,14 @@
 .submittedDiv {
   background-color: white;
-  width: 900px;
+  width: 70%;
   height: max-content;
   text-align: center;
   border-radius: 15px;
   padding: 1.25rem
+}
+.submittedDiv h1{
+ width: 90%;
+ margin: auto;
 }
 .thankyouimg {
   width: 50%;
