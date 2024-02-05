@@ -8,7 +8,7 @@ const FormSubmiitted = () => {
         src="https://onboarding.rankroverpro.com/img/thankyou_img.jpg"
         className="thankyouimg"
       />
-      <h1>Thank you for submitting your Onboarding form! We will be in touch shortly with next steps.</h1>
+      <h1>Thank you for submitting your SEO form! We will be in touch shortly with next steps.</h1>
     </div>
   );
 };
